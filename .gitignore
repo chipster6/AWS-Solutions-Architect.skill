@@ -1,0 +1,100 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.netlify/
+.vercel/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# AWS credentials and configuration
+.aws/
+.aws/credentials
+.aws/config
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Temporary folders
+tmp/
+temp/
+
+# AWS SAM and CDK
+.cdk/
+cdk.out/
+.sam/
+
+# Docker
+.dockerignore
+.docker/
+
+# Package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# AWS Lambda specific
+.aws-lambda-rie
+.aws-sam
+
+# Testing
+coverage/
+.nyc_output/
+
+# Documentation builds
+_site/
+book/
+
+# Security
+id_rsa*
+known_hosts
+
+# AWS CloudFormation
+.cloudformation/
+
+# AWS CodeBuild/CodePipeline
+buildspec.yml
+
+# AWS SAM templates
+samconfig.toml
