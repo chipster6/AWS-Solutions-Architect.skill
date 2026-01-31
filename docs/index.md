@@ -29,6 +29,29 @@ This comprehensive documentation system provides expert guidance on AWS architec
 - [Decision Trees](../files/service-decisions-enhanced.md) - Interactive service selection
 - [Best Practices](../files/architecture-patterns.md) - AWS recommended patterns
 
+### Workflows (Structured Directory View)
+- [Discovery Process](./workflows/discovery.md) - Systematic requirements gathering
+- [Architecture Review](./workflows/review.md) - Well-Architected Framework assessments
+- [Service Decisions](./workflows/decisions.md) - Choosing between AWS services
+- [Migration Planning](./workflows/migration.md) - 6 R's migration strategy
+
+### Patterns (Structured Directory View)
+- [Architecture Patterns](./patterns/architecture.md) - Common AWS architecture patterns
+- [Compliance Framework](./patterns/compliance.md) - Regulatory requirement mapping
+- [Migration Patterns](./patterns/migration.md) - Migration strategies and approaches
+- [Service Decisions](./patterns/services.md) - Service selection frameworks
+
+### Tools (Structured Directory View)
+- [Cost Estimator](./tools/cost-estimator.md) - Real-time cost estimation
+- [Team Assessment](./tools/team-assessment.md) - Capability evaluation
+- [Implementation Guide](./tools/implementation-guide.md) - Guided implementation
+- [Compliance Checker](./tools/compliance-checker.md) - Regulatory compliance assessment
+
+### Reference (Structured Directory View)
+- [Well-Architected Framework](./reference/well-architected.md) - 6 pillars of AWS best practices
+- [Decision Trees](./reference/decision-trees.md) - Interactive service selection
+- [Best Practices](./reference/best-practices.md) - AWS recommended patterns
+
 ## Getting Started
 
 ### For New Users
