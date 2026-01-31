@@ -1,8 +1,8 @@
-# Service Decision Trees Reference
+# Enhanced Service Decision Framework
 
 ## Purpose
 
-This reference provides frameworks for choosing between AWS services. Always consult AWS Decision Guides via MCP for current, detailed guidance.
+This reference provides frameworks for choosing between AWS services with integration to AWS Prescriptive Guidance. Always consult AWS Decision Guides via MCP for current, detailed guidance.
 
 ## Compute Service Selection
 
@@ -267,6 +267,49 @@ Integration Need
 
 **MCP Lookup**: "AWS integration services comparison"
 
+## AWS Prescriptive Guidance Integration
+
+AWS Prescriptive Guidance provides official cloud design patterns. Always consult these via MCP before recommending patterns:
+
+### Key Pattern Categories
+- **Modernization Patterns**: Decomposing monoliths, microservices integration
+- **Compute Patterns**: Serverless, containers, batch processing
+- **Data Patterns**: Event sourcing, CQRS, shared database
+- **Integration Patterns**: API routing, circuit breaker, saga
+- **Reliability Patterns**: Retry with backoff, bulkhead, health checks
+
+### Using Prescriptive Guidance
+1. **Search for patterns**:
+   ```
+   MCP_DOCKER:search_documentation "AWS Prescriptive Guidance [pattern name]"
+   ```
+
+2. **Get implementation details**:
+   ```
+   MCP_DOCKER:read_documentation [URL from search results]
+   ```
+
+3. **Check for code samples**:
+   ```
+   MCP_DOCKER:search_documentation "[pattern name] GitHub sample AWS"
+   ```
+
+### Pattern Selection Framework
+When choosing patterns, consider:
+- **Business Context**: What problem are we solving?
+- **Team Capabilities**: Can we implement this pattern?
+- **Complexity vs. Benefit**: Is the pattern worth the complexity?
+- **AWS Service Alignment**: Does this pattern use appropriate AWS services?
+
+### Common Pattern Mappings
+- **Strangler Fig**: API Gateway + Lambda + Route 53 weighted routing
+- **Circuit Breaker**: Lambda + DynamoDB + CloudWatch alarms
+- **Event Sourcing**: Kinesis + Lambda + DynamoDB + S3
+- **Saga Orchestration**: Step Functions + Lambda + DynamoDB
+- **API Routing**: API Gateway + Lambda + CloudFront
+
+**MCP Lookup**: "AWS Prescriptive Guidance cloud design patterns"
+
 ## Service Selection Best Practices
 
 ### 1. Start with Managed Services
@@ -346,7 +389,7 @@ When making service decisions, document:
    - Pros: [Benefits]
    - Cons: [Drawbacks]
    - Cost: [Estimate]
-   
+    
 2. **[Service B]**
    - Pros: [Benefits]
    - Cons: [Drawbacks]
@@ -385,6 +428,11 @@ Before recommending services:
 4. **Get decision guidance**:
    ```
    MCP_DOCKER:search_documentation "choosing [category] AWS"
+   ```
+
+5. **Check Prescriptive Guidance**:
+   ```
+   MCP_DOCKER:search_documentation "AWS Prescriptive Guidance [pattern category]"
    ```
 
 This ensures recommendations reflect current service capabilities and AWS guidance.

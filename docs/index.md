@@ -7,27 +7,27 @@ This comprehensive documentation system provides expert guidance on AWS architec
 ## Quick Navigation
 
 ### Workflows
-- [Discovery Process](./workflows/discovery.md) - Systematic requirements gathering
-- [Architecture Review](./workflows/review.md) - Well-Architected Framework assessments
-- [Service Decisions](./workflows/decisions.md) - Choosing between AWS services
-- [Migration Planning](./workflows/migration.md) - 6 R's migration strategy
+- [Discovery Process](../files/discovery-questions-enhanced.md) - Systematic requirements gathering with Well-Architected integration
+- [Architecture Review](../files/well-architected-pillars.md) - Well-Architected Framework assessments
+- [Service Decisions](../files/service-decisions-enhanced.md) - Choosing between AWS services
+- [Migration Planning](../files/migration-patterns.md) - 6 R's migration strategy
 
 ### Patterns
-- [Architecture Patterns](./patterns/architecture.md) - Common AWS architecture patterns
-- [Compliance Framework](./patterns/compliance.md) - Regulatory requirement mapping
-- [Migration Patterns](./patterns/migration.md) - Migration strategies and approaches
-- [Service Decisions](./patterns/services.md) - Service selection frameworks
+- [Architecture Patterns](../files/architecture-patterns.md) - Common AWS architecture patterns
+- [Compliance Framework](../files/compliance-framework.md) - Regulatory requirement mapping
+- [Migration Patterns](../files/migration-patterns.md) - Migration strategies and approaches
+- [Service Decisions](../files/service-decisions-enhanced.md) - Service selection frameworks
 
 ### Tools
-- [Cost Estimator](./tools/cost-estimator.md) - Real-time cost estimation
-- [Team Assessment](./tools/team-assessment.md) - Capability evaluation
-- [Implementation Guide](./tools/implementation-guide.md) - Guided implementation
-- [Compliance Checker](./tools/compliance-checker.md) - Regulatory compliance assessment
+- [Cost Estimator](../tools/cost-estimator.md) - Real-time cost estimation
+- [Team Assessment](../tools/team-assessment.md) - Capability evaluation
+- [Implementation Guide](../tools/implementation-guide.md) - Guided implementation
+- [Compliance Checker](../files/compliance-framework.md) - Regulatory compliance assessment
 
 ### Reference
-- [Well-Architected Framework](./reference/well-architected.md) - 6 pillars of AWS best practices
-- [Decision Trees](./reference/decision-trees.md) - Interactive service selection
-- [Best Practices](./reference/best-practices.md) - AWS recommended patterns
+- [Well-Architected Framework](../files/well-architected-pillars.md) - 6 pillars of AWS best practices
+- [Decision Trees](../files/service-decisions-enhanced.md) - Interactive service selection
+- [Best Practices](../files/architecture-patterns.md) - AWS recommended patterns
 
 ## Getting Started
 
