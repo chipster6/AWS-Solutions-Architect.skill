@@ -1,0 +1,52 @@
+workflows:
+  discovery:
+    router: docs/workflows/discovery.md
+    canonical: files/discovery-questions-enhanced.md
+  review:
+    router: docs/workflows/review.md
+    canonical: files/well-architected-pillars.md
+  decisions:
+    router: docs/workflows/decisions.md
+    canonical: files/service-decisions-enhanced.md
+  migration:
+    router: docs/workflows/migration.md
+    canonical: files/migration-patterns.md
+
+patterns:
+  architecture:
+    router: docs/patterns/architecture.md
+    canonical: files/architecture-patterns.md
+  compliance:
+    router: docs/patterns/compliance.md
+    canonical: files/compliance-framework.md
+  migration:
+    router: docs/patterns/migration.md
+    canonical: files/migration-patterns.md
+  services:
+    router: docs/patterns/services.md
+    canonical: files/service-decisions-enhanced.md
+
+tools:
+  cost-estimator:
+    router: docs/tools/cost-estimator.md
+    canonical: tools/cost-estimator.md
+  team-assessment:
+    router: docs/tools/team-assessment.md
+    canonical: tools/team-assessment.md
+  implementation-guide:
+    router: docs/tools/implementation-guide.md
+    canonical: tools/implementation-guide.md
+  compliance-checker:
+    router: docs/tools/compliance-checker.md
+    canonical: files/compliance-framework.md
+
+reference:
+  well-architected:
+    router: docs/reference/well-architected.md
+    canonical: files/well-architected-pillars.md
+  decision-trees:
+    router: docs/reference/decision-trees.md
+    canonical: files/service-decisions-enhanced.md
+  best-practices:
+    router: docs/reference/best-practices.md
+    canonical: files/architecture-patterns.md

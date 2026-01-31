@@ -139,4 +139,46 @@ This framework guides the systematic discovery process that Solutions Architects
    - Encryption in transit (required/optional)
    - Key management requirements
    
-   Network
+    Network Security:
+    - VPC requirements
+    - Firewall rules
+    - DDoS protection needs
+    - Network segmentation requirements
+    
+    Incident Response:
+    - Incident detection requirements
+    - Response time targets
+    - Forensic capabilities
+    - Notification procedures
+
+5. **Compliance Requirements**
+    ```
+    Regulatory Frameworks:
+    - HIPAA (Healthcare)
+    - PCI-DSS (Payments)
+    - SOX (Financial reporting)
+    - GDPR (Data privacy)
+    - FedRAMP (Government)
+    
+    Data Residency:
+    - Data must stay within [country/region]
+    - Sovereignty requirements
+    
+    Audit Requirements:
+    - Logging requirements
+    - Monitoring requirements
+    - Reporting frequency
+    ```
+
+6. **Sustainability Requirements**
+    ```
+    Carbon Footprint Goals:
+    - Renewable energy usage target
+    - Carbon reduction targets
+    - Sustainability reporting needs
+    
+    Resource Efficiency:
+    - Energy efficiency requirements
+    - Resource utilization goals
+    - Waste reduction targets
+    ```

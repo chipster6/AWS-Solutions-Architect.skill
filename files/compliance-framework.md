@@ -97,6 +97,123 @@ BAA Support:
 - Covered services: [list from AWS documentation]
 ```
 
+**Detailed Implementation Guide**:
+
+1. **KMS Configuration for HIPAA**:
+   ```
+   # Create HIPAA-compliant KMS key
+   aws kms create-key --description "HIPAA PHI Encryption Key" --tags Key=Compliance,Value=HIPAA
+   aws kms create-alias --alias-name alias/hipaa-phi-key --target-key-id <key-id>
+   
+   # Configure key policy
+   cat > key-policy.json <<EOF
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": { "AWS": "arn:aws:iam::<account-id>:root" },
+         "Action": "kms:*",
+         "Resource": "*"
+       },
+       {
+         "Effect": "Allow",
+         "Principal": { "AWS": "arn:aws:iam::<account-id>:role/hipaa-access-role" },
+         "Action": [
+           "kms:Encrypt",
+           "kms:Decrypt",
+           "kms:ReEncrypt*",
+           "kms:GenerateDataKey*",
+           "kms:DescribeKey"
+         ],
+         "Resource": "*"
+       }
+     ]
+   }
+   EOF
+   
+   aws kms put-key-policy --key-id <key-id> --policy-name default --policy file://key-policy.json
+   ```
+
+2. **S3 Bucket Configuration for PHI**:
+   ```
+   # Create HIPAA-compliant S3 bucket
+   aws s3api create-bucket \
+     --bucket <bucket-name> \
+     --region us-east-1 \
+     --tagging TagSet=[{Key=Compliance,Value=HIPAA}]
+   
+   # Enable default encryption with KMS key
+   aws s3api put-bucket-encryption \
+     --bucket <bucket-name> \
+     --server-side-encryption-configuration '{
+       "Rules": [
+         {
+           "ApplyServerSideEncryptionByDefault": {
+             "SSEAlgorithm": "aws:kms",
+             "KMSMasterKeyID": "arn:aws:kms:us-east-1:<account-id>:key/<key-id>"
+           }
+         }
+       ]
+     }'
+   
+   # Configure bucket policy for restricted access
+   cat > bucket-policy.json <<EOF
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Deny",
+         "Principal": "*",
+         "Action": "s3:*",
+         "Resource": [
+           "arn:aws:s3:::<bucket-name>",
+           "arn:aws:s3:::<bucket-name>/*"
+         ],
+         "Condition": {
+           "Bool": { "aws:SecureTransport": "false" }
+         }
+       },
+       {
+         "Effect": "Allow",
+         "Principal": { "AWS": "arn:aws:iam::<account-id>:role/hipaa-access-role" },
+         "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+         "Resource": "arn:aws:s3:::<bucket-name>/*"
+       }
+     ]
+   }
+   EOF
+   
+   aws s3api put-bucket-policy --bucket <bucket-name> --policy file://bucket-policy.json
+   ```
+
+3. **RDS Configuration for PHI**:
+   ```
+   # Create HIPAA-compliant RDS instance
+   aws rds create-db-instance \
+     --db-instance-identifier hipaa-db \
+     --allocated-storage 20 \
+     --db-instance-class db.t3.medium \
+     --engine mysql \
+     --master-username admin \
+     --master-user-password <password> \
+     --kms-key-id <key-id> \
+     --storage-encrypted \
+     --vpc-security-group-ids <sg-id> \
+     --tags Key=Compliance,Value=HIPAA
+   
+   # Enable automated backups
+   aws rds modify-db-instance \
+     --db-instance-identifier hipaa-db \
+     --backup-retention-period 30 \
+     --preferred-backup-window 02:00-03:00
+   
+   # Enable encryption in transit
+   aws rds modify-db-instance \
+     --db-instance-identifier hipaa-db \
+     --enable-iam-database-authentication
+   ```
+
 #### PCI-DSS (Payments)
 
 **Requirements**:

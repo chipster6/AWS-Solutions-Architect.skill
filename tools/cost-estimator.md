@@ -233,21 +233,52 @@ Data Transfer Cost = (GB Transferred × Rate per GB)
 
 ## Integration Example
 ```javascript
-const pricing = await fetch('https://calculator.aws/pricing', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${API_KEY}`,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    services: ['ec2', 's3', 'rds'],
-    usage: {
-      ec2: { hours: 730, instances: 4, type: 't3.medium' },
-      s3: { storage: 100, requests: 1000000 },
-      rds: { hours: 730, instances: 1, type: 'db.t3.medium' }
+require('dotenv').config();
+
+const fetchAWS Pricing = async (services, usage) => {
+  try {
+    const API_KEY = process.env.AWS_PRICING_API_KEY;
+    if (!API_KEY) {
+      throw new Error('AWS PRICING_API_KEY environment variable is required');
     }
-  })
-});
+
+    const response = await fetch('https://calculator.aws/pricing', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ services, usage })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status: ${response.status}`);
+    }
+
+    const pricingData = await response.json();
+    return pricingData;
+  } catch (error) {
+    console.error('Error fetching AWS pricing data:', error);
+    // Implement retry logic for transient errors
+    if (error.message.includes('500') || error.message.includes('503')) {
+      console.log('Retrying request...');
+      return fetchAWS Pricing(services, usage); // Simple retry
+    }
+    throw error; // Re-throw non-transient errors
+  }
+};
+
+// Usage example
+const services = ['ec2', 's3', 'rds'];
+const usage = {
+  ec2: { hours: 730, instances: 4, type: 't3.medium' },
+  s3: { storage: 100, requests: 1000000 },
+  rds: { hours: 730, instances: 1, type: 'db.t3.medium' }
+};
+
+fetchAWS Pricing(services, usage)
+  .then(data => console.log('Pricing data:', data))
+  .catch(error => console.error('Failed to get pricing data:', error));
 ```
 
 ### AWS Cost Explorer Integration
@@ -262,24 +293,55 @@ const pricing = await fetch('https://calculator.aws/pricing', {
 
 ## Integration Example
 ```javascript
-const costExplorer = new AWS.CostExplorer({ region: 'us-east-1' });
+const AWS = require('aws-sdk');
+require('dotenv').config();
 
-const params = {
-  TimePeriod: {
-    Start: '2026-01-01',
-    End: '2026-01-31'
-  },
-  Granularity: 'MONTHLY',
-  Metrics: ['UnblendedCost'],
-  Filter: {
-    Dimensions: {
-      Key: 'SERVICE',
-      Values: ['AmazonEC2', 'AmazonS3', 'AmazonRDS']
+// Configure AWS SDK
+AWS.config.update({
+  region: process.env.AWS_REGION || 'us-east-1',
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
+
+const costExplorer = new AWS.CostExplorer();
+
+const getCostAndUsage = async (startDate, endDate, services) => {
+  try {
+    const params = {
+      TimePeriod: {
+        Start: startDate,
+        End: endDate
+      },
+      Granularity: 'MONTHLY',
+      Metrics: ['UnblendedCost'],
+      Filter: {
+        Dimensions: {
+          Key: 'SERVICE',
+          Values: services
+        }
+      }
+    };
+
+    const data = await costExplorer.getCostAndUsage(params).promise();
+    return data;
+  } catch (error) {
+    console.error('Error fetching cost data:', error);
+    
+    // Handle rate limiting
+    if (error.code === 'Throttling') {
+      console.log('Rate limited, retrying after delay...');
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return getCostAndUsage(startDate, endDate, services);
     }
+    
+    throw error;
   }
 };
 
-const data = await costExplorer.getCostAndUsage(params).promise();
+// Usage example
+getCostAndUsage('2026-01-01', '2026-01-31', ['AmazonEC2', 'AmazonS3', 'AmazonRDS'])
+  .then(data => console.log('Cost data:', data))
+  .catch(error => console.error('Failed to get cost data:', error));
 ```
 
 ## Cost Estimation Best Practices
