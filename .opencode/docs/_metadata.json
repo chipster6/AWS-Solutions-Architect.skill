@@ -1,0 +1,33 @@
+{
+  "documents": {
+    "docs_aws_amazon_com_aws-certification_latest_examguides_solutions-arch.md": {
+      "url": "https://docs.aws.amazon.com/aws-certification/latest/examguides/solutions-architect-professional-02.html",
+      "title": "AWS Certified Solutions Architect - Professional (SAP-C02) - AWS Certification",
+      "fetchedAt": "2026-02-04T21:55:02.529Z",
+      "expiresAt": "2026-02-05T21:55:02.529Z",
+      "size": 371
+    },
+    "d1_awsstatic_com_onedam_marketing-channels_website_aws_en_US_certif.md": {
+      "url": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/certification/approved/pdfs/docs-sa-pro/AWS-Certified-Solutions-Architect-Professional_Exam-Guide.pdf",
+      "title": "Untitled",
+      "fetchedAt": "2026-02-04T21:55:02.572Z",
+      "expiresAt": "2026-02-05T21:55:02.572Z",
+      "size": 15259
+    },
+    "media_tutorialsdojo_com_5BSAP-C025DTutorialsDojoStudyGuideandCheatSheets-A.md": {
+      "url": "https://media.tutorialsdojo.com/%5BSAP-C02%5D+Tutorials+Dojo+Study+Guide+and+Cheat+Sheets+-+AWS+Certified+Solutions+Architect+Professional+-+Snippet+-+2025.pdf",
+      "title": "Untitled",
+      "fetchedAt": "2026-02-04T21:55:48.160Z",
+      "expiresAt": "2026-02-05T21:55:48.160Z",
+      "size": 15248
+    },
+    "github_com_scheema_AWS-SAP-C02.md": {
+      "url": "https://github.com/scheema/AWS-SAP-C02",
+      "title": "GitHub - scheema/AWS-SAP-C02: AWS Solution Architect Certification Notes",
+      "fetchedAt": "2026-02-04T21:56:30.731Z",
+      "expiresAt": "2026-02-05T21:56:30.731Z",
+      "size": 15191
+    }
+  },
+  "lastUpdated": "2026-02-04T21:56:30.734Z"
+}
