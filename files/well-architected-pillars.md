@@ -1,8 +1,20 @@
 # Well-Architected Framework Pillars Reference
 
+**Document ID:** workflow-review  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/workflows/review.md](../docs/workflows/review.md)  
+**Related:** [discovery-questions-enhanced.md](discovery-questions-enhanced.md), [architecture-patterns.md](architecture-patterns.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Purpose
 
 This reference provides guidance on conducting Well-Architected Framework reviews across all 6 pillars. For detailed, current best practices, always consult AWS documentation via MCP before conducting reviews.
+
+### Related Documents
+- **[Discovery Process](discovery-questions-enhanced.md)** - Use discovery questions before conducting reviews
+- **[Architecture Patterns](architecture-patterns.md)** - Review patterns against Well-Architected principles
+- **[Service Decisions](service-decisions-enhanced.md)** - Validate service selections against pillars
+- **[Compliance Framework](compliance-framework.md)** - Security pillar alignment with compliance
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by pillar and topic
 
 ## The 6 Pillars
 

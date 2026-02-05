@@ -1,8 +1,18 @@
 # AWS Cost Estimation Tool
 
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md) | [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)  
+**Router:** [docs/tools/cost-estimator.md](../docs/tools/cost-estimator.md)  
+**Related:** [Service Decisions](../files/service-decisions-enhanced.md) (cost trade-offs) | [Architecture Patterns](../files/architecture-patterns.md) (cost optimization)
+
 ## Overview
 
 This tool provides real-time cost estimation for AWS architectures based on service selection, usage patterns, and configuration options. It integrates with AWS Pricing Calculator APIs to provide accurate cost projections.
+
+### Related Documentation
+- **[Service Decisions](../files/service-decisions-enhanced.md)** - Cost comparison between services
+- **[Architecture Patterns](../files/architecture-patterns.md)** - Cost-optimized patterns
+- **[AWS Comprehensive Guide](../AWS_Solutions_Architect_Comprehensive_Guide.md)** Section 11 (Cost Optimization)
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by service pricing
 
 ## Usage Scenarios
 

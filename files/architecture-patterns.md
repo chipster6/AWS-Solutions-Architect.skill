@@ -1,8 +1,20 @@
 # Architecture Patterns Reference
 
+**Document ID:** pattern-architecture  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/patterns/architecture.md](../docs/patterns/architecture.md)  
+**Related:** [service-decisions-enhanced.md](service-decisions-enhanced.md), [well-architected-pillars.md](well-architected-pillars.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Purpose
 
 This reference provides common AWS architecture patterns. Always consult AWS Prescriptive Guidance via MCP for current implementation details and official patterns.
+
+### Related Documents
+- **[Service Decisions](service-decisions-enhanced.md)** - Select services to implement these patterns
+- **[Well-Architected Pillars](well-architected-pillars.md)** - Review patterns against all 6 pillars
+- **[Discovery Process](discovery-questions-enhanced.md)** - Use Phase 2 technical discovery for pattern selection
+- **[Migration Patterns](migration-patterns.md)** - Patterns for migrated workloads
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by pattern type and service
 
 ## Pattern Categories
 

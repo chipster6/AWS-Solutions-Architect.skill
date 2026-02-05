@@ -1,8 +1,18 @@
 # Implementation Guidance Templates
 
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md) | [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)  
+**Router:** [docs/tools/implementation-guide.md](../docs/tools/implementation-guide.md)  
+**Related:** [Architecture Patterns](../files/architecture-patterns.md) (implementation patterns) | [Service Decisions](../files/service-decisions-enhanced.md) (service setup) | [Team Assessment](team-assessment.md) (capability requirements)
+
 ## Overview
 
 This collection of implementation guidance templates provides structured approaches for deploying AWS solutions, ensuring consistency, quality, and alignment with best practices. The templates cover various implementation scenarios and complexity levels.
+
+### Related Documentation
+- **[Architecture Patterns](../files/architecture-patterns.md)** - Patterns to implement
+- **[Service Decisions](../files/service-decisions-enhanced.md)** - Service configuration guidance
+- **[Migration Patterns](../files/migration-patterns.md)** - Implementation for migrations
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by implementation task
 
 ## Template Categories
 

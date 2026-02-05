@@ -1,8 +1,20 @@
 # Enhanced Discovery Process with Well-Architected Integration
 
+**Document ID:** workflow-discovery  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/workflows/discovery.md](../docs/workflows/discovery.md)  
+**Related:** [well-architected-pillars.md](well-architected-pillars.md), [service-decisions-enhanced.md](service-decisions-enhanced.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Overview
 
 This framework guides systematic discovery process that Solutions Architects use to understand requirements before designing architectures. It integrates Well-Architected Framework questions directly into discovery to ensure architectures align with AWS best practices from the start.
+
+### Related Documents
+- **[Service Decisions](service-decisions-enhanced.md)** - Use after discovery to select appropriate services
+- **[Architecture Patterns](architecture-patterns.md)** - Reference for pattern selection based on discovered requirements
+- **[Compliance Framework](compliance-framework.md)** - Use when compliance requirements are identified
+- **[Migration Patterns](migration-patterns.md)** - For migration project discovery phase
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate to related topics
 
 ---
 

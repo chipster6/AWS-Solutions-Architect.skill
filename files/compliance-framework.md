@@ -1,8 +1,20 @@
 # Compliance Framework for AWS Solutions Architects
 
+**Document ID:** pattern-compliance  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/patterns/compliance.md](../docs/patterns/compliance.md)  
+**Related:** [well-architected-pillars.md](well-architected-pillars.md), [architecture-patterns.md](architecture-patterns.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Purpose
 
 This framework provides comprehensive compliance requirement gathering and mapping to AWS services. It ensures architectures meet regulatory requirements from the start rather than retrofitting compliance later.
+
+### Related Documents
+- **[Discovery Process](discovery-questions-enhanced.md)** - Phase 1 covers compliance discovery
+- **[Well-Architected Pillars](well-architected-pillars.md)** - Security pillar closely aligns with compliance
+- **[Architecture Patterns](architecture-patterns.md)** - Implement compliant patterns
+- **[Service Decisions](service-decisions-enhanced.md)** - Select compliant services
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by regulation and service
 
 ---
 
