@@ -1,8 +1,18 @@
 # Team Capability Assessment Framework
 
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md) | [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)  
+**Router:** [docs/tools/team-assessment.md](../docs/tools/team-assessment.md)  
+**Related:** [Discovery Process](../files/discovery-questions-enhanced.md) (team context) | [Implementation Guide](implementation-guide.md) (capability requirements)
+
 ## Overview
 
 This framework provides a comprehensive assessment of team capabilities for AWS solutions architecture, identifying strengths, gaps, and development needs. It helps organizations evaluate their readiness for AWS adoption and identify areas for improvement.
+
+### Related Documentation
+- **[Discovery Process](../files/discovery-questions-enhanced.md)** - Phase 1 includes team assessment
+- **[Implementation Guide](implementation-guide.md)** - Capability requirements for implementation
+- **[Well-Architected Pillars](../files/well-architected-pillars.md)** - Skills needed per pillar
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by skill area
 
 ## Assessment Dimensions
 

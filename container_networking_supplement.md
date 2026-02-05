@@ -1,8 +1,19 @@
 # AWS Solutions Architect: Container Networking Deep Dive
 
+**Index:** [GOV-ARCH-001](GOV-ARCH-001-Architecture-Documentation-Index.md) | [CROSS_REFERENCE_INDEX.md](CROSS_REFERENCE_INDEX.md)  
+**Related:** [AWS Comprehensive Guide](AWS_Solutions_Architect_Comprehensive_Guide.md) Section 5 (Networking)  
+**Related Supplements:** [Route 53](route53_implementation_supplement.md) | [Security](security_services_supplement.md)  
+**Decision Framework:** [Service Decisions](files/service-decisions-enhanced.md) - ECS vs EKS vs Lambda
+
 ## Overview
 
 Container networking extends beyond traditional VPC networking. ECS and EKS have specific networking patterns that SA Pro architects must master.
+
+### Related Documentation
+- **[Architecture Patterns](files/architecture-patterns.md)** - Microservices and container patterns
+- **[Service Decisions](files/service-decisions-enhanced.md)** - Container service selection
+- **[Well-Architected Pillars](files/well-architected-pillars.md)** - Security and reliability for containers
+- **[Cross-Reference Index](CROSS_REFERENCE_INDEX.md)** - Navigate by service (ECS, EKS, Fargate)
 
 ---
 

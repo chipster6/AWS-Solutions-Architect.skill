@@ -1,8 +1,21 @@
 # Migration Patterns Reference
 
+**Document ID:** workflow-migration  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/workflows/migration.md](../docs/workflows/migration.md)  
+**Related:** [discovery-questions-enhanced.md](discovery-questions-enhanced.md), [service-decisions-enhanced.md](service-decisions-enhanced.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Purpose
 
 This reference provides guidance on migrating workloads to AWS using the 6 R's migration strategy. Always consult AWS Migration documentation via MCP for current best practices.
+
+### Related Documents
+- **[Discovery Process](discovery-questions-enhanced.md)** - Phase 4 covers migration-specific discovery
+- **[Service Decisions](service-decisions-enhanced.md)** - Select target services for migration
+- **[Architecture Patterns](architecture-patterns.md)** - Target architecture patterns post-migration
+- **[Well-Architected Pillars](well-architected-pillars.md)** - Review migrated workloads against pillars
+- **[Compliance Framework](compliance-framework.md)** - Maintain compliance during migration
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by migration strategy and service
 
 ## The 6 R's Migration Strategy
 

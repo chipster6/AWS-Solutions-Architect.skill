@@ -1,4 +1,6 @@
-# Enhanced Service Decision Framework
+# Service Decision Framework
+
+> ⚠️ **DEPRECATED**: This document has been superseded by [`service-decisions-enhanced.md`](service-decisions-enhanced.md) which provides more comprehensive decision frameworks, additional service categories, and updated AWS Prescriptive Guidance integration. Please use the enhanced version for all new work.
 
 ## Purpose
 

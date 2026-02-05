@@ -1,8 +1,20 @@
 # Enhanced Service Decision Framework
 
+**Document ID:** workflow-decisions  
+**Index:** [GOV-ARCH-001](../GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Router:** [docs/workflows/decisions.md](../docs/workflows/decisions.md)  
+**Related:** [discovery-questions-enhanced.md](discovery-questions-enhanced.md), [architecture-patterns.md](architecture-patterns.md), [CROSS_REFERENCE_INDEX.md](../CROSS_REFERENCE_INDEX.md)
+
 ## Purpose
 
 This reference provides frameworks for choosing between AWS services with integration to AWS Prescriptive Guidance. Always consult AWS Decision Guides via MCP for current, detailed guidance.
+
+### Related Documents
+- **[Discovery Process](discovery-questions-enhanced.md)** - Complete discovery before making service decisions
+- **[Architecture Patterns](architecture-patterns.md)** - Match services to architectural patterns
+- **[Well-Architected Pillars](well-architected-pillars.md)** - Validate decisions against all 6 pillars
+- **[Migration Patterns](migration-patterns.md)** - Service selection for migration scenarios
+- **[Cross-Reference Index](../CROSS_REFERENCE_INDEX.md)** - Navigate by service and use case
 
 ## Compute Service Selection
 

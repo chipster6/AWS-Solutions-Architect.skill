@@ -2,7 +2,15 @@
 
 **Version:** 2.0.0  
 **Last Updated:** 2026-02-04  
-**Scope:** Deep explanations of AWS architecture concepts, patterns, and practices
+**Scope:** Deep explanations of AWS architecture concepts, patterns, and practices  
+**Index:** [GOV-ARCH-001](GOV-ARCH-001-Architecture-Documentation-Index.md)  
+**Related:** [CROSS_REFERENCE_INDEX.md](CROSS_REFERENCE_INDEX.md), [files/](files/)
+
+### Navigation
+- **[Architecture Documentation Index](GOV-ARCH-001-Architecture-Documentation-Index.md)** - Master catalog of all documentation
+- **[Cross-Reference Index](CROSS_REFERENCE_INDEX.md)** - Navigate by domain, service, and topic
+- **[Decision Frameworks](files/)** - Service selection and architecture patterns
+- **Implementation Supplements:** [Container Networking](container_networking_supplement.md) | [Route 53](route53_implementation_supplement.md) | [DRS](drs_implementation_supplement.md) | [CI/CD](cicd_implementation_supplement.md) | [Systems Manager](systems_manager_supplement.md) | [Config](aws_config_supplement.md) | [Security](security_services_supplement.md) | [Backup](aws_backup_supplement.md)
 
 ---
 
@@ -1451,10 +1459,11 @@ Compute Layer:
   +-- Aurora Replica 2 (AZ-2)
   +-- Aurora Replica 3 (AZ-3)
 
-Shared Storage Layer (across 3 AZs):
-  +-- 6-way replicated (2 copies per AZ)
+Shared Storage Layer (cluster volume across 3 AZs):
+  +-- Data replicated across 3 Availability Zones
   +-- 10 GB segments, self-healing
   +-- Up to 128 TB
+  +-- Quorum-based replication (4/6 writes, 3/6 reads)
 ```
 
 **Key Innovations:**
@@ -1464,10 +1473,12 @@ Shared Storage Layer (across 3 AZs):
 - No replication lag for replicas (typically < 20ms)
 - Instant failover (typically < 30 seconds)
 
-2. **6-Way Replication:**
-- 4/6 copies needed for write
-- 3/6 copies needed for read
-- Survive loss of entire AZ + 1 instance
+2. **Quorum-Based Replication:**
+- Storage subsystem uses 6-way replication across 3 AZs
+- 4/6 copies needed for write quorum
+- 3/6 copies needed for read quorum
+- Can survive loss of entire AZ + 1 additional component
+- Data automatically replicated across all 3 AZs in the region
 
 3. **Auto-Scaling Storage:**
 - Starts at 10 GB
@@ -1903,7 +1914,7 @@ Cons: More Lambdas to manage (use frameworks like SAM, CDK)
 
 ## 10. Migration Strategies
 
-### 10.1 The 6 R's Explained
+### 10.1 The 7 R's Explained
 
 **1. Rehost ("Lift and Shift"):**
 ```
@@ -1985,6 +1996,30 @@ Session stored in DB ->    ElastiCache
 **6. Retain ("Revisit"):**
 - **What:** Keep on-premises
 - **When:** Regulatory requirements, latency needs, not ready to migrate
+
+**7. Relocate ("Hypervisor-Level Lift and Shift"):**
+```
+On-Premises VMware          AWS
+------------------          ---
+vSphere VMs          ->    VMware Cloud on AWS (VMC)
+VMware Workloads     ->    Direct migration to VMC
+```
+- **What:** Move VMware VMs directly to VMware Cloud on AWS without conversion
+- **Speed:** Fast (hours to days per workload)
+- **Effort:** Low (no re-platforming or re-architecture)
+- **Benefit:** Minimal disruption, preserves existing VMware tools/processes, rapid migration
+- **Downside:** Higher cost than native AWS, still requires future optimization
+
+**When to Use:**
+- Large-scale VMware estates
+- Need to migrate quickly without application changes
+- Want to maintain existing VMware operational model
+- Plan to modernize later after migration
+
+**Key Tools:**
+- **AWS Application Migration Service (MGN)** - Supports VMware replication
+- **VMware HCX** - Workload mobility platform for VMC
+- **VMware vMotion** - Live migration to VMC
 
 ### 10.2 Migration Process
 
@@ -2407,14 +2442,72 @@ Root (Organization)
 - Apply to all IAM entities in account (including root)
 
 **SCP Evaluation Logic:**
+
+SCPs use a deny-by-default model with specific rules for Allow and Deny statements:
+
+**Allow Evaluation (ALL must be true):**
 ```
-1. Default: Allow all
-2. Evaluate identity-based policy (user/role permission)
-3. Evaluate SCP (organizational boundary)
-4. Effective permission = intersection of both
-5. If either denies -> Deny
-6. If neither explicitly allows -> Deny
+Root SCP ──┐
+           ├──> All must ALLOW ──> Permission ALLOWED
+OU 1 SCP ──┤   (at every level)
+           │
+OU 2 SCP ──┤
+           │
+Account ───┘
 ```
+- For a permission to be allowed, there must be an **explicit Allow statement at EVERY level**
+- From the root, through each OU in the direct path, to the target account
+- AWS Organizations attaches the FullAWSAccess managed policy by default when SCPs are enabled
+- If FullAWSAccess is removed and not replaced at any level, all accounts under that level are blocked
+
+**Deny Evaluation (ANY can block):**
+```
+Root SCP ──┐
+           ├──> ANY can DENY ──> Permission DENIED
+OU 1 SCP ──┤   (at any level)
+           │
+OU 2 SCP ──┤
+           │
+Account ───┘
+```
+- A Deny statement at ANY level denies the permission for all accounts beneath it
+- Deny statements are powerful for organization-wide guardrails
+
+**Complete Evaluation Flow:**
+```
+Request made
+    │
+    ▼
+┌─────────────────────────────────────┐
+│ 1. Check SCPs for explicit Deny     │
+│    (Any level can deny)             │
+│    Deny found? ──YES──> DENY        │
+└───────────────┬─────────────────────┘
+                │ NO
+                ▼
+┌─────────────────────────────────────┐
+│ 2. Check identity-based policy      │
+│    (User/Role permissions)          │
+│    No Allow? ──YES──> DENY          │
+└───────────────┬─────────────────────┘
+                │ NO
+                ▼
+┌─────────────────────────────────────┐
+│ 3. Check SCPs for explicit Allow    │
+│    (Must exist at EVERY level)      │
+│    Missing Allow? ──YES──> DENY     │
+└───────────────┬─────────────────────┘
+                │ NO
+                ▼
+           ALLOW request
+```
+
+**Key Points:**
+- **Default**: Deny (implicit deny if no explicit allow)
+- **Allow requires**: Explicit allow at ALL levels (root → OUs → account)
+- **Deny requires**: Explicit deny at ANY level
+- **FullAWSAccess**: AWS managed policy attached by default (allows all services)
+- **Intersection logic**: Permission is intersection of identity policy AND all SCPs in the hierarchy
 
 **Common SCP Patterns:**
 

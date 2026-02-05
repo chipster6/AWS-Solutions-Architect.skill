@@ -1,5 +1,7 @@
 # AWS Solutions Architect Skill - Discovery Process Framework
 
+> ⚠️ **DEPRECATED**: This document has been superseded by [`discovery-questions-enhanced.md`](discovery-questions-enhanced.md) which includes Well-Architected Framework integration and enhanced decision criteria. Please use the enhanced version for all new work.
+
 ## Overview
 
 This framework guides the systematic discovery process that Solutions Architects use to understand requirements before designing architectures. It ensures no critical aspect is overlooked and provides a structured conversation flow.

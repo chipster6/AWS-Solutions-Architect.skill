@@ -98,3 +98,10 @@ buildspec.yml
 
 # AWS SAM templates
 samconfig.toml
+
+# OpenCode Agent metadata
+.opencode/
+.opencode/archive/
+.opencode/archive/todo_history.jsonl
+.opencode/todo.version.json
+.opencode/archive/tasks/
