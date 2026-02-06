@@ -1,0 +1,255 @@
+---
+version: 1.0
+provider: aws
+last_updated: "2024-01-01"
+
+services:
+  compute:
+    - name: Amazon EC2
+      category: compute/virtual-machines
+      use_when:
+        - Full control needed
+        - Specialized workloads (HPC, GPU)
+        - Windows workloads
+        - Existing licenses
+      avoid_when:
+        - Variable workloads (prefer Lambda)
+        - Container workloads (prefer ECS/EKS)
+        - Simple web applications (prefer serverless)
+      tags: [iaas, self-managed]
+      provider_info:
+        aws_service: ec2
+        pricing_model: "On-demand, Reserved, Spot"
+        documentation: "https://docs.aws.amazon.com/ec2/"
+        
+    - name: AWS Lambda
+      category: compute/serverless
+      use_when:
+        - Event-driven workloads
+        - Variable traffic patterns
+        - Short-lived functions (<15 min)
+        - Cost optimization for low utilization
+      avoid_when:
+        - Long-running processes
+        - Stateful workloads
+        - Complex orchestration (prefer Step Functions)
+      tags: [serverless, faas]
+      provider_info:
+        aws_service: lambda
+        pricing_model: "Request + GB-seconds"
+        documentation: "https://docs.aws.amazon.com/lambda/"
+        
+    - name: Amazon ECS
+      category: compute/containers
+      use_when:
+        - Containerized workloads
+        - Need fine-grained control
+        - Existing Docker images
+      avoid_when:
+        - Need Kubernetes (use EKS)
+        - Want fully managed (use Fargate)
+      tags: [containers, managed]
+      provider_info:
+        aws_service: ecs
+        pricing_model: "Fargate (CPU/GB) or EC2 (instance)"
+        documentation: "https://docs.aws.amazon.com/ecs/"
+        
+    - name: Amazon EKS
+      category: compute/kubernetes
+      use_when:
+        - Kubernetes requirement
+        - Complex orchestration
+        - Multi-team platform
+      avoid_when:
+        - Simpler container needs (use ECS)
+        - No Kubernetes expertise
+      tags: [containers, kubernetes, managed]
+      provider_info:
+        aws_service: eks
+        pricing_model: "$0.10/hour per cluster + EC2"
+        documentation: "https://docs.aws.amazon.com/eks/"
+        
+  storage:
+    - name: Amazon S3
+      category: storage/object
+      use_when:
+        - Object storage needs
+        - Static website hosting
+        - Data lake foundation
+        - Unstructured data
+      avoid_when:
+        - File system access needed (use EFS/FSx)
+        - Block storage needed (use EBS)
+      tags: [storage, object, serverless]
+      provider_info:
+        aws_service: s3
+        pricing_model: "Storage + requests + data transfer"
+        documentation: "https://docs.aws.amazon.com/s3/"
+        
+    - name: Amazon EBS
+      category: storage/block
+      use_when:
+        - Block storage for EC2
+        - Low-latency databases
+        - Boot volumes
+      avoid_when:
+        - Shared access needed (use EFS)
+        - Multi-instance access (use EFS)
+      tags: [storage, block]
+      provider_info:
+        aws_service: ebs
+        pricing_model: "Provisioned IOPS + storage"
+        documentation: "https://docs.aws.amazon.com/ebs/"
+        
+    - name: Amazon EFS
+      category: storage/file
+      use_when:
+        - Shared file access
+        - POSIX-compliant filesystem
+        - Linux-based workloads
+      avoid_when:
+        - Windows file shares (use FSx)
+        - High-performance computing (use FSx Lustre)
+      tags: [storage, file, managed]
+      provider_info:
+        aws_service: efs
+        pricing_model: "GB storage + GB transfer"
+        documentation: "https://docs.aws.amazon.com/efs/"
+        
+  database:
+    - name: Amazon DynamoDB
+      category: database/nosql
+      use_when:
+        - Serverless preference
+        - High scale/key-value access
+        - Flexible schema
+      avoid_when:
+        - Complex queries/joins needed (use RDS)
+        - ACID transactions across tables
+      tags: [database, nosql, serverless]
+      provider_info:
+        aws_service: dynamodb
+        pricing_model: "On-demand or provisioned capacity"
+        documentation: "https://docs.aws.amazon.com/dynamodb/"
+        
+    - name: Amazon RDS
+      category: database/relational
+      use_when:
+        - Relational data model
+        - Complex queries
+        - ACID compliance
+        - MySQL, PostgreSQL, Oracle, SQL Server, Aurora
+      avoid_when:
+        - Serverless preferred (use Aurora Serverless)
+        - Extreme scale (consider DynamoDB)
+      tags: [database, relational, managed]
+      provider_info:
+        aws_service: rds
+        pricing_model: "Instance + storage + backups"
+        documentation: "https://docs.aws.amazon.com/rds/"
+        
+    - name: Amazon Aurora
+      category: database/relational
+      use_when:
+        - MySQL/PostgreSQL compatibility
+        - Enterprise performance
+        - Global database needs
+      avoid_when:
+        - Simple workloads (use RDS)
+        - Non-relational needs
+      tags: [database, relational, high-performance]
+      provider_info:
+        aws_service: aurora
+        pricing_model: "Serverless or provisioned + I/O"
+        documentation: "https://docs.aws.amazon.com/aurora/"
+        
+  network:
+    - name: Amazon VPC
+      category: network/isolation
+      use_when:
+        - Network isolation needed
+        - Custom IP ranges
+        - Security boundaries
+      avoid_when:
+        - Simple public access (use default VPC)
+      tags: [network, iaas]
+      provider_info:
+        aws_service: vpc
+        pricing_model: "No charge for VPC + resources"
+        documentation: "https://docs.aws.amazon.com/vpc/"
+        
+    - name: Amazon Transit Gateway
+      category: network/hub
+      use_when:
+        - Hub-and-spoke architecture
+        - Multiple VPCs
+        - Cross-VPC routing
+      avoid_when:
+        - Few VPCs (use VPC peering)
+        - Simple architectures
+      tags: [network, managed]
+      provider_info:
+        aws_service: tgw
+        pricing_model: "$0.02/attachment/hour + data"
+        documentation: "https://docs.aws.amazon.com/vpc/latest/tgw/"
+        
+    - name: Amazon Route 53
+      category: network/dns
+      use_when:
+        - DNS management
+        - Health checking
+        - Traffic routing
+        - Domain registration
+      avoid_when:
+        - Third-party DNS preferred
+      tags: [network, dns, managed]
+      provider_info:
+        aws_service: route53
+        pricing_model: "Queries + hosted zones + health checks"
+        documentation: "https://docs.aws.amazon.com/route53/"
+        
+    - name: AWS PrivateLink
+      category: network/private-access
+      use_when:
+        - Private service exposure
+        - VPC-to-VPC communication
+        - SaaS integration
+      avoid_when:
+        - Public service access
+        - Simple VPC peering
+      tags: [network, private, secure]
+      provider_info:
+        aws_service: vpc-endpoint
+        pricing_model: "$0.01/hour per endpoint + AZ"
+        documentation: "https://docs.aws.amazon.com/vpc/latest/privatelink/"
+        
+  ai_ml:
+    - name: Amazon Bedrock
+      category: ai_ml/foundation-models
+      use_when:
+        - Generative AI applications
+        - RAG workloads
+        - LLM integration
+      avoid_when:
+        - Traditional ML models (use SageMaker)
+        - Custom model training needed
+      tags: [ai, ml, generative-ai, serverless]
+      provider_info:
+        aws_service: bedrock
+        pricing_model: "Per-model pricing (tokens/requests)"
+        documentation: "https://docs.aws.amazon.com/bedrock/"
+        
+    - name: Amazon SageMaker
+      category: ai_ml/ml-platform
+      use_when:
+        - Custom ML model development
+        - Model training and deployment
+        - MLOps pipelines
+      avoid_when:
+        - Simple predictions (use Lambda + model)
+        - No ML expertise
+      tags: [ai, ml, managed, mlops]
+      provider_info:
+        aws_service: sagemaker
+        pricing_model: "Instance-based (training/inference)"
+        documentation: "https://docs.aws.amazon.com/sagemaker/"

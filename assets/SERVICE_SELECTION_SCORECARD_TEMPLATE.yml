@@ -1,0 +1,83 @@
+---
+id: service-scorecard-{timestamp}
+title: Service Selection Scorecard
+date: {YYYY-MM-DD}
+use_case: "{Use case description}"
+---
+
+# Service Selection Scorecard
+
+## Candidate Services
+- service_1: {Name}
+- service_2: {Name}
+- service_3: {Name}
+
+## Evaluation Criteria Matrix
+
+criteria:
+  - name: Cost Efficiency
+    weight: 0.20
+    description: Total cost of ownership
+    
+  - name: Performance
+    weight: 0.20
+    description: Latency, throughput, scalability
+    
+  - name: Operational Maturity
+    weight: 0.15
+    description: Managed service level, operational burden
+    
+  - name: Security Posture
+    weight: 0.15
+    description: Built-in security features, compliance
+    
+  - name: Integration
+    weight: 0.15
+    description: Ecosystem compatibility
+    
+  - name: Time to Value
+    weight: 0.15
+    description: Implementation complexity
+
+## Scoring Results
+
+service_1:
+  Cost Efficiency: {1-10}
+  Performance: {1-10}
+  Operational Maturity: {1-10}
+  Security Posture: {1-10}
+  Integration: {1-10}
+  Time to Value: {1-10}
+  Weighted Total: {calculated}
+  Rank: {position}
+
+service_2:
+  Cost Efficiency: {1-10}
+  Performance: {1-10}
+  Operational Maturity: {1-10}
+  Security Posture: {1-10}
+  Integration: {1-10}
+  Time to Value: {1-10}
+  Weighted Total: {calculated}
+  Rank: {position}
+
+service_3:
+  Cost Efficiency: {1-10}
+  Performance: {1-10}
+  Operational Maturity: {1-10}
+  Security Posture: {1-10}
+  Integration: {1-10}
+  Time to Value: {1-10}
+  Weighted Total: {calculated}
+  Rank: {position}
+
+## Recommendation
+
+recommendation:
+  primary: {service_name}
+  rationale: {Explanation}
+  alternatives: [{service_names}]
+  conditions_for_alternatives: {Description}
+
+## Notes
+{Additional observations}

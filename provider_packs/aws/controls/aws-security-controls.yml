@@ -1,0 +1,266 @@
+---
+version: 1.0
+provider: aws
+last_updated: "2024-01-01"
+controls_version: "2024-01"
+---
+
+controls:
+  identity_access:
+    - id: "IAM-001"
+      name: "Enable MFA for All IAM Users"
+      severity: "High"
+      description: "Ensure all IAM users have MFA enabled"
+      category: "Identity Management"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        aws_managed_policy: "IAMUserChangePassword"
+        terraform: |
+          resource "aws_iam_user" "example" {
+            name = "example-user"
+          }
+          
+          resource "aws_iam_user_policy_attachment" "mfa" {
+            user       = aws_iam_user.example.name
+            policy_arn = "arn:aws:iam::aws:policy/IAMUserChangePassword"
+          }
+      detection:
+        cloudwatch_metric: "aws.iam.mfa_authenticated"
+        
+    - id: "IAM-002"
+      name: "Use IAM Roles Instead of Access Keys"
+      severity: "High"
+      description: "Prefer IAM roles over long-term access keys"
+      category: "Identity Management"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          # Use instance profile for EC2
+          resource "aws_iam_instance_profile" "example" {
+            name = "example-profile"
+            role = aws_iam_role.example.name
+          }
+      detection:
+        cloudtrail_event: "CreateAccessKey"
+        
+    - id: "IAM-003"
+      name: "Implement Least Privilege IAM Policies"
+      severity: "Medium"
+      description: "Use IAM policies with minimum required permissions"
+      category: "Identity Management"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_iam_policy" "least_privilege" {
+            name        = "least-privilege-policy"
+            description = "Policy with minimal required permissions"
+            
+            policy = jsonencode({
+              Version = "2012-10-17"
+              Statement = [{
+                Effect = "Allow"
+                Action = [
+                  "s3:GetObject"
+                ]
+                Resource = "arn:aws:s3:::example-bucket/*"
+              }]
+            })
+          }
+      detection:
+        config_rule: "iam-policy-no-statements-with-admin-access"
+
+  encryption:
+    - id: "ENC-001"
+      name: "Enable Encryption at Rest"
+      severity: "High"
+      description: "Ensure all storage services use encryption at rest"
+      category: "Data Protection"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          # S3 bucket encryption
+          resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
+            bucket = aws_s3_bucket.example.id
+            
+            rule {
+              apply_server_side_encryption_by_default {
+                sse_algorithm = "aws:kms"
+                kms_master_key_id = aws_kms_key.example.arn
+              }
+            }
+          }
+      detection:
+        config_rule: "s3-bucket-server-side-encryption-enabled"
+        
+    - id: "ENC-002"
+      name: "Enable Encryption in Transit"
+      severity: "High"
+      description: "Enforce TLS for all connections"
+      category: "Data Protection"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          # ALB enforce HTTPS
+          resource "aws_lb_listener" "example" {
+            load_balancer_arn = aws_lb.example.arn
+            port              = 443
+            protocol          = "HTTPS"
+            
+            default_action {
+              type = "forward"
+              target_group_arn = aws_lb_target_group.example.arn
+            }
+          }
+      detection:
+        cloudtrail_event: "CreateLoadBalancer"
+
+  network_security:
+    - id: "NET-001"
+      name: "Restrict VPC Security Groups"
+      severity: "High"
+      description: "Prevent overly permissive security group rules"
+      category: "Network Security"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_security_group" "restricted" {
+            name        = "restricted-sg"
+            description = "Security group with restricted access"
+            vpc_id      = aws_vpc.example.id
+            
+            # Only allow HTTPS from specific CIDR
+            ingress {
+              from_port   = 443
+              to_port     = 443
+              protocol    = "tcp"
+              cidr_blocks = ["10.0.0.0/16"]
+            }
+            
+            # No outbound to internet by default
+            egress {
+              from_port   = 0
+              to_port     = 0
+              protocol    = "-1"
+              cidr_blocks = ["10.0.0.0/16"]
+            }
+          }
+      detection:
+        config_rule: "security-group-check"
+        
+    - id: "NET-002"
+      name: "Enable VPC Flow Logs"
+      severity: "Medium"
+      description: "Capture network traffic metadata for analysis"
+      category: "Network Security"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_flow_log" "example" {
+            iam_role_arn    = aws_iam_role.vpc_flow_log.arn
+            log_destination_type = "cloud-watch-logs"
+            log_group_name   = aws_cloudwatch_log_group.example.name
+            traffic_type     = "ALL"
+            vpc_id          = aws_vpc.example.id
+          }
+      detection:
+        cloudwatch_log_group_exists: true
+
+  logging_monitoring:
+    - id: "LOG-001"
+      name: "Enable CloudTrail Across All Regions"
+      severity: "High"
+      description: "Ensure API activity is logged organization-wide"
+      category: "Logging & Monitoring"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_cloudtrail" "organization" {
+            name                          = "organization-trail"
+            is_organization_trail         = true
+            s3_bucket_name                = aws_s3_bucket.trail.id
+            s3_key_prefix                 = "trail/"
+            include_global_service_events = true
+            enable_log_file_validation    = true
+          }
+      detection:
+        cloudtrail_status: "enabled"
+        
+    - id: "LOG-002"
+      name: "Configure CloudWatch Alarms"
+      severity: "Medium"
+      description: "Set up alerts for security events"
+      category: "Logging & Monitoring"
+      Well-Architected_Pillar: "Operational Excellence"
+      remediation:
+        terraform: |
+          resource "aws_cloudwatch_metric_alarm" "unauthorized_api" {
+            alarm_name                = "unauthorized-api-calls"
+            comparison_operator       = "GreaterThanThreshold"
+            evaluation_periods        = 1
+            metric_name              = "UnauthorizedAPIRequests"
+            namespace                 = "AWS/CloudTrail"
+            period                   = 300
+            statistic                = "Sum"
+            threshold                = 0
+            alarm_description        = "Alert on unauthorized API calls"
+            
+            alarm_actions = [aws_sns_topic.alerts.arn]
+          }
+      detection:
+        cloudwatch_alarm_status: "OK"
+
+  compliance:
+    - id: "CMP-001"
+      name: "Enable Security Hub Standards"
+      severity: "High"
+      description: "Monitor compliance with AWS security standards"
+      category: "Compliance"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_securityhub_account" "example" {
+            enable_default_standards = true
+          }
+          
+          resource "aws_securityhub_standards_subscription" "cis" {
+            standards_arn = "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0"
+          }
+      detection:
+        securityhub_finding_count: 0
+
+  data_protection:
+    - id: "DPT-001"
+      name: "Enable S3 Block Public Access"
+      severity: "High"
+      description: "Prevent accidental public access to S3 buckets"
+      category: "Data Protection"
+      Well-Architected_Pillar: "Security"
+      remediation:
+        terraform: |
+          resource "aws_s3_bucket_public_access_block" "example" {
+            bucket = aws_s3_bucket.example.id
+            
+            block_public_acls       = true
+            block_public_policy     = true
+            ignore_public_acls      = true
+            restrict_public_buckets = true
+          }
+      detection:
+        s3_public_access_block_status: "enabled"
+
+control_frameworks:
+  - name: "CIS AWS Foundations Benchmark"
+    version: "1.2.0"
+    control_count: 48
+    
+  - name: "AWS Foundational Security Best Practices"
+    version: "latest"
+    control_count: 200+
+    
+  - name: "PCI DSS v3.2.1"
+    version: "3.2.1"
+    control_count: 264
+    
+  - name: "NIST Special Publication 800-53"
+    version: "rev5"
+    control_count: 300+

@@ -65,7 +65,7 @@ Identify what the user needs:
    - Operational capabilities (24/7 support?)
    - Regulatory requirements
 
-**For detailed discovery questions**: See `references/discovery-questions.md`
+**For detailed discovery questions**: See `references/discovery-questions-enhanced.md`
 
 **After discovery**: Consult AWS documentation for patterns matching the requirements, then recommend architecture.
 
@@ -125,7 +125,7 @@ Identify what the user needs:
    - Alternative options
    - When to revisit the decision
 
-**For decision trees**: See `references/service-decisions.md`
+**For decision trees**: See `references/service-decisions-enhanced.md`
 
 ## Workflow 4: Migration Planning
 
